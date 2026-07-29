@@ -34,7 +34,7 @@ jobs:
           echo "Branch or tag: $GITHUB_REF" >> investigation-output/result.txt
 
       - name: Display investigation file
-        run: cat investigation-output/missing-file.txt
+        run: cat investigation-output/result.txt
       
       - name: Upload investigation artifact
         uses: actions/upload-artifact@v4
