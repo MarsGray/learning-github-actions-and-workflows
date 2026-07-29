@@ -1,0 +1,43 @@
+name: First Workflow Investigation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  investigate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      
+      - name: Print environment information
+        run:  |
+          echo "Current directory:"
+          pwd
+
+          echo "Repository files:"
+          ls -la
+
+          echo "Node versin:"
+          node --version
+
+          echo "Operating systems:"
+          uname -a
+
+      - name: Create investigation file
+        run:  |
+          mkdir -p investigation-output
+          echo "Workflow completed successfully" > investigation-output/result.txt
+          echo "Run number: $GITHUB_RUN_NUMBER" >> investigation-output/result.txt
+          echo "Commit: $GITHUB_SHA" >> investigation-output/result.txt
+          echo "Branch or tag: $GITHUB_REF" >> investigation-output/result.txt
+
+      - name: Display investigation file
+        run: cat investigation-output/result.txt
+      
+      - name: Upload investigation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-investigation
+          path: investigation-output
